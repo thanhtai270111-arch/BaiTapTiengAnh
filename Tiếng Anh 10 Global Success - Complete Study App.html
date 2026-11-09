@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Tiếng Anh 10 – Global Success (Unit 1, 2, 3)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .main-nav-btn.active {
+            background-color: #0284c7;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between py-3.5 gap-3">
+                <!-- Branding -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">Ôn tập Tiếng Anh 10 – Global Success</h1>
+                        <p class="text-xs text-brand-600 font-medium">Unit 1 • Unit 2 • Unit 3</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="flex flex-wrap gap-1 bg-slate-100 p-1.5 rounded-xl text-xs sm:text-sm font-semibold">
+                    <button onclick="switchMainTab('part1')" id="nav-part1" class="main-nav-btn px-4 py-2 rounded-lg transition-all active">
+                        <i class="fa-solid fa-book-open mr-1.5"></i>Phần 1: Từ Vựng & Ngữ Pháp
+                    </button>
+                    <button onclick="switchMainTab('part2')" id="nav-part2" class="main-nav-btn px-4 py-2 rounded-lg transition-all">
+                        <i class="fa-solid fa-pen-to-square mr-1.5"></i>Phần 2: Bài Tập Tổng Hợp 3 Unit
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Sub-tabs for Part 1 (Only visible in Part 1) -->
+        <div id="unit-subtabs-bar" class="mb-6 flex justify-center">
+            <div class="inline-flex p-1 bg-white border border-slate-200 rounded-xl shadow-sm gap-1 text-xs sm:text-sm font-medium">
+                <button id="unit-tab-unit1" onclick="switchUnitTab('unit1')" class="unit-subnav-btn px-4 py-2 rounded-lg transition-all bg-brand-600 text-white font-bold">
+                    <i class="fa-solid fa-people-roof mr-1.5"></i>Unit 1: Family Life
+                </button>
+                <button id="unit-tab-unit2" onclick="switchUnitTab('unit2')" class="unit-subnav-btn px-4 py-2 rounded-lg transition-all text-slate-600 hover:text-brand-600">
+                    <i class="fa-solid fa-leaf mr-1.5"></i>Unit 2: Environment
+                </button>
+                <button id="unit-tab-unit3" onclick="switchUnitTab('unit3')" class="unit-subnav-btn px-4 py-2 rounded-lg transition-all text-slate-600 hover:text-brand-600">
+                    <i class="fa-solid fa-music mr-1.5"></i>Unit 3: Music
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Content Mount Point -->
+        <div id="content-container"></div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-8 text-center text-xs text-slate-500">
+        <p class="font-medium">Chương Trình Ôn Tập Tiếng Anh 10 Global Success (Unit 1 - Unit 3)</p>
+    </footer>
+
+    <!-- Core App Script -->
+    <script>
+        // EXPANDED DATA BANK (COMPLETE SGK UNITS 1-3)
+        const appData = {
+            unit1: {
+                title: "Unit 1: Family Life",
+                vocab: [
+                    { word: "household chores", ipa: "/ˈhaʊshəʊld tʃɔːz/", meaning: "công việc nhà", sentence: "Doing household chores helps kids learn to take responsibility." },
+                    { word: "breadwinner", ipa: "/ˈbredwɪnə(r)/", meaning: "người trụ cột gia đình", sentence: "In many Asian families, the husband is the main breadwinner." },
+                    { word: "homemaker", ipa: "/ˈhəʊmmeɪkə(r)/", meaning: "người nội trợ", sentence: "My mother chose to be a homemaker to take care of us." },
+                    { word: "heavy lifting", ipa: "/ˌhevi ˈlɪftɪŋ/", meaning: "công việc nặng nhọc", sentence: "My elder brother usually handles the heavy lifting." },
+                    { word: "groceries", ipa: "/ˈɡrəʊsəriz/", meaning: "thực phẩm & nhu yếu phẩm", sentence: "She went to the local store to buy groceries for dinner." },
+                    { word: "washing-up", ipa: "/ˌwɒʃɪŋ ˈʌp/", meaning: "việc rửa chén bát", sentence: "It is my duty to do the washing-up after dinner." },
+                    { word: "laundry", ipa: "/ˈlɔːndri/", meaning: "quần áo cần giặt / việc giặt ủi", sentence: "My mom does the laundry twice a week." },
+                    { word: "divide / split", ipa: "/dɪˈvaɪd/ /splɪt/", meaning: "phân chia (công việc)", sentence: "We divide the household duties among family members." },
+                    { word: "gratitude", ipa: "/ˈɡrætɪtjuːd/", meaning: "lòng biết ơn", sentence: "Expressing gratitude to parents strengthens family bonds." },
+                    { word: "bond", ipa: "/bɒnd/", meaning: "sự gắn kết, tình cảm", sentence: "Cooking together creates a strong family bond." },
+                    { word: "financial burden", ipa: "/faɪˈnænʃl ˈbɜːdn/", meaning: "gánh nặng tài chính", sentence: "Sharing household expenses relieves the financial burden." }
+                ],
+                grammar: [
+                    {
+                        title: "1. Present Simple vs. Present Continuous (Hiện tại đơn vs. Hiện tại tiếp diễn)",
+                        content: `
+                            <div class="grid lg:grid-cols-2 gap-4 text-xs">
+                                <div class="bg-sky-50 border border-sky-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-sky-900 text-sm mb-2"><i class="fa-solid fa-arrows-rotate mr-1.5"></i>Present Simple (Hiện Tại Đơn)</h4>
+                                    <p class="mb-2"><b>S + V(s/es) | S + do/does not + V-bare</b></p>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li>Diễn tả thói quen, công việc hàng ngày hoặc sự thật hiển nhiên.</li>
+                                        <li><b>Dấu hiệu:</b> <i>always, usually, often, everyday, on weekends...</i></li>
+                                    </ul>
+                                    <p class="mt-2 text-sky-800 italic bg-white p-2 rounded">Ex: My dad <b>prepares</b> breakfast every morning.</p>
+                                </div>
+                                <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-indigo-900 text-sm mb-2"><i class="fa-solid fa-spinner mr-1.5"></i>Present Continuous (Hiện Tại Tiếp Diễn)</h4>
+                                    <p class="mb-2"><b>S + am/is/are + V-ing</b></p>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li>Hành động đang diễn ra ngay lúc nói hoặc tạm thời.</li>
+                                        <li><b>Dấu hiệu:</b> <i>now, at present, at the moment, Look!, Listen!...</i></li>
+                                    </ul>
+                                    <p class="mt-2 text-indigo-800 italic bg-white p-2 rounded">Ex: Look! Lan <b>is doing</b> the laundry right now.</p>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900">
+                                <strong>Lưu ý Stative Verbs:</strong> Không chia tiếp diễn với động từ chỉ cảm xúc/sở hữu/tri giác: <i>love, like, want, know, understand, need, belong...</i>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            unit2: {
+                title: "Unit 2: Humans and the Environment",
+                vocab: [
+                    { word: "eco-friendly", ipa: "/ˌiːkəʊ ˈfrendli/", meaning: "thân thiện với môi trường", sentence: "We should use eco-friendly products like bamboo straws." },
+                    { word: "carbon footprint", ipa: "/ˌkɑːbən ˈfʊtprɪnt/", meaning: "lượng khí thải carbon", sentence: "Walking to school reduces your carbon footprint." },
+                    { word: "green lifestyle", ipa: "/ɡriːn ˈlaɪfstaɪl/", meaning: "lối sống xanh", sentence: "Adopting a green lifestyle benefits both humans and nature." },
+                    { word: "single-use plastic", ipa: "/ˌsɪŋɡl juːs ˈplæstɪk/", meaning: "đồ nhựa dùng một lần", sentence: "Say no to single-use plastic bags and water bottles." },
+                    { word: "renewable energy", ipa: "/rɪˈnjuːəbl ˈenədʒi/", meaning: "năng lượng tái tạo", sentence: "Solar and wind power are clean renewable energy sources." },
+                    { word: "sustainable", ipa: "/səˈsteɪnəbl/", meaning: "bền vững", sentence: "Sustainable development protects resources for future generations." },
+                    { word: "decompose", ipa: "/ˌdiːkəmˈpəʊz/", meaning: "phân hủy", sentence: "Plastic bottles take hundreds of years to decompose." },
+                    { word: "landfill", ipa: "/ˈlændfɪl/", meaning: "bãi chôn lấp rác thải", sentence: "Too much waste is sent to landfills every day." },
+                    { word: "recycle & reuse", ipa: "/ˌriːˈsaɪkl / ˌriːˈjuːz/", meaning: "tái chế & tái sử dụng", sentence: "We must recycle paper and reuse plastic containers." }
+                ],
+                grammar: [
+                    {
+                        title: "1. Future: Will vs. Be Going To",
+                        content: `
+                            <div class="grid lg:grid-cols-2 gap-4 text-xs">
+                                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-emerald-900 text-sm mb-2">WILL + V-bare</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li>Quyết định bộc phát ngay thời điểm nói (không có kế hoạch trước).</li>
+                                        <li>Dự đoán cảm tính (<i>I think, I believe, hope...</i>).</li>
+                                    </ul>
+                                    <p class="mt-2 text-emerald-900 italic bg-white p-2 rounded">Ex: I think people <b>will plant</b> more trees.</p>
+                                </div>
+                                <div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-teal-900 text-sm mb-2">BE GOING TO + V-bare</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li>Kế hoạch / dự định đã có từ trước.</li>
+                                        <li>Dự đoán dựa trên bằng chứng/dấu hiệu có thật ở hiện tại.</li>
+                                    </ul>
+                                    <p class="mt-2 text-teal-900 italic bg-white p-2 rounded">Ex: Look at those black clouds! It <b>is going to rain</b>.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "2. Passive Voice (Toàn bộ 12 công thức Bị động chuẩn)",
+                        content: `
+                            <div class="bg-slate-100 border border-slate-200 rounded-xl p-4 text-xs">
+                                <p class="font-bold text-slate-800 mb-2">Công thức chung: <span class="text-brand-600">S + Be + V3/ed (+ by O)</span></p>
+                                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 text-slate-700">
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Hiện tại đơn:</b><br><code class="text-brand-700">am/is/are + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Hiện tại tiếp diễn:</b><br><code class="text-brand-700">am/is/are being + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Hiện tại hoàn thành:</b><br><code class="text-brand-700">have/has been + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Quá khứ đơn:</b><br><code class="text-brand-700">was/were + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Quá khứ tiếp diễn:</b><br><code class="text-brand-700">was/were being + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Quá khứ hoàn thành:</b><br><code class="text-brand-700">had been + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Tương lai đơn:</b><br><code class="text-brand-700">will be + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Tương lai gần:</b><br><code class="text-brand-700">is/are going to be + V3/ed</code></div>
+                                    <div class="bg-white p-2.5 rounded border border-slate-200"><b>Modal Verbs:</b><br><code class="text-brand-700">can/must/should be + V3/ed</code></div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            unit3: {
+                title: "Unit 3: Music",
+                vocab: [
+                    { word: "audience", ipa: "/ˈɔːdiəns/", meaning: "khán thính giả", sentence: "The audience cheered wildly for the lead singer." },
+                    { word: "performance", ipa: "/pəˈfɔːməns/", meaning: "màn trình diễn", sentence: "They gave a spectacular live performance on stage." },
+                    { word: "talent show", ipa: "/ˈtælənt ʃəʊ/", meaning: "cuộc thi tài năng", sentence: "He reached the finals of the national talent show." },
+                    { word: "judge & contestant", ipa: "/dʒʌdʒ & kənˈtestənt/", meaning: "giám khảo & thí sinh", sentence: "The judges gave constructive feedback to every contestant." },
+                    { word: "eliminate", ipa: "/ɪˈlɪmɪneɪt/", meaning: "loại khỏi cuộc thi", sentence: "Two singers were eliminated in the second round." },
+                    { word: "debut single", ipa: "/ˈdeɪbjuː ˈsɪŋɡl/", meaning: "đĩa đơn đầu tay", sentence: "Her debut single topped the music charts immediately." },
+                    { word: "composer", ipa: "/kəmˈpəʊzə(r)/", meaning: "nhà soạn nhạc", sentence: "Trinh Cong Son was a famous Vietnamese composer." },
+                    { word: "melody & rhythm", ipa: "/ˈmelədi & ˈrɪðəm/", meaning: "giai điệu & nhịp điệu", sentence: "This pop song has a catchy melody and strong rhythm." }
+                ],
+                grammar: [
+                    {
+                        title: "1. Compound Sentences with FANBOYS (Câu ghép)",
+                        content: `
+                            <div class="bg-purple-50 border border-purple-200 rounded-xl p-4 text-xs text-slate-800">
+                                <p class="font-bold text-purple-900 mb-2">Quy tắc FANBOYS nối 2 mệnh đề độc lập (Mệnh đề 1, [FANBOYS] Mệnh đề 2):</p>
+                                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-2 text-center font-medium">
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>F</b>or (vì)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>A</b>nd (và)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>N</b>or (cũng không)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>B</b>ut (nhưng)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>O</b>r (hoặc)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>Y</b>et (tuy nhiên)</div>
+                                    <div class="bg-white p-2 rounded border border-purple-200"><b>S</b>o (vì vậy)</div>
+                                </div>
+                                <p class="mt-3 italic">Ex: She sang beautifully, <b>so</b> the judges gave her maximum points.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "2. To-infinitives vs. Bare Infinitives",
+                        content: `
+                            <div class="grid lg:grid-cols-2 gap-4 text-xs">
+                                <div class="bg-pink-50 border border-pink-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-pink-900 text-sm mb-2">To-Infinitive (To + V)</h4>
+                                    <p class="mb-2">Theo sau các động từ: <i>decide, plan, want, promise, hope, agree, refuse, offer, intend...</i></p>
+                                    <p class="text-pink-900 italic bg-white p-2 rounded">Ex: He decided <b>to join</b> the band.</p>
+                                </div>
+                                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-amber-900 text-sm mb-2">Bare Infinitive (V không to)</h4>
+                                    <p class="mb-2">Theo sau động từ khuyết thiếu và cấu trúc: <b>make + O + V</b>, <b>let + O + V</b></p>
+                                    <p class="text-amber-900 italic bg-white p-2 rounded">Ex: Her parents let her <b>attend</b> the concert.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "3. Gerunds (Danh động từ - Verb-ing) & Phân biệt To-V / V-ing",
+                        content: `
+                            <div class="space-y-3 text-xs">
+                                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-emerald-900 text-sm mb-2"><i class="fa-solid fa-layer-group mr-1.5"></i>Các trường hợp bắt buộc dùng V-ing (Gerund):</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li><b>Sau nhóm động từ:</b> <i>enjoy, avoid, consider, suggest, mind, practice, finish, postpone, admit, spend time/money...</i></li>
+                                        <li><b>Sau Giới từ (Prepositions):</b> <i>in, on, at, about, for, of, look forward to, keen on, interested in, good at...</i></li>
+                                        <li><b>Làm Chủ ngữ (Subject) hoặc Tân ngữ (Object):</b> <i class="text-emerald-800"><b>Recycling</b> plastics reduces pollution.</i></li>
+                                        <li><b>Bị động của Gerund:</b> <code class="bg-white px-1.5 py-0.5 rounded text-emerald-900 font-mono font-bold">being + V3/ed</code> (Ex: He hates <b>being treated</b> like a child.)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                                    <h4 class="font-bold text-blue-900 text-sm mb-2"><i class="fa-solid fa-code-compare mr-1.5"></i>Động từ đi với cả To-V và V-ing (Khác nghĩa):</h4>
+                                    <div class="grid sm:grid-cols-2 gap-2 text-slate-700">
+                                        <div class="bg-white p-2.5 rounded border border-blue-200">
+                                            <b class="text-blue-900">remember / forget / regret</b><br>
+                                            • <b>+ To-V:</b> Nhớ/quên/tiếc phải làm việc tương lai.<br>
+                                            • <b>+ V-ing:</b> Nhớ/quên/tiếc đã làm việc trong quá khứ.
+                                        </div>
+                                        <div class="bg-white p-2.5 rounded border border-blue-200">
+                                            <b class="text-blue-900">stop / try</b><br>
+                                            • <b>stop + To-V:</b> Dừng lại ĐỂ làm việc khác.<br>
+                                            • <b>stop + V-ing:</b> Dừng hẳn việc đang làm.<br>
+                                            • <b>try + To-V:</b> Cố gắng | <b>try + V-ing:</b> Thử làm.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        };
+
+        // DYNAMIC QUESTION GENERATOR WITH FISHER-YATES SHUFFLE FOR OPTIONS & WORDS
+        const QuestionGenerator = {
+            // General Fisher-Yates array shuffling algorithm
+            shuffleArray: function(arr) {
+                let array = [...arr];
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            },
+
+            generateMCQ: function(count = 8) {
+                const rawPool = [
+                    { q: "Lan enjoys __________ single-use plastic bags when going shopping.", correctText: "avoiding", wrongText: ["to avoid", "avoid", "avoided"], explain: "Sau động từ 'enjoy' dùng V-ing (enjoy avoiding)." },
+                    { q: "They are looking forward to __________ the live music performance this evening.", correctText: "attending", wrongText: ["attend", "to attend", "attended"], explain: "Sau cụm giới từ 'look forward to' dùng V-ing (attending)." },
+                    { q: "My brother hates __________ interrupted while he is practicing the piano.", correctText: "being", wrongText: ["to be", "be", "been"], explain: "Bị động của Gerund sau 'hate' có dạng 'being + V3' (being interrupted)." },
+                    { q: "You should stop __________ plastic cups and switch to reusable bamboo bottles.", correctText: "buying", wrongText: ["to buy", "buy", "bought"], explain: "'Stop + V-ing' nghĩa là dừng hẳn thói quen/hành động (dừng mua ly nhựa)." },
+                    { q: "Look! Lan __________ the heavy lifting in the garden right now.", correctText: "is doing", wrongText: ["does", "did", "do"], explain: "Dấu hiệu 'Look!' và 'right now' dùng Hiện tại tiếp diễn." },
+                    { q: "Single-use plastic bottles __________ to protect the marine ecosystem.", correctText: "should be banned", wrongText: ["banned", "should ban", "are banning"], explain: "Chủ ngữ chỉ vật 'plastic bottles' cần dạng bị động Modal Verb (should be banned)." },
+                    { q: "Look at those dark grey clouds! It __________ rain in a few minutes.", correctText: "is going to", wrongText: ["will", "rains", "is raining"], explain: "Dự đoán dựa trên bằng chứng hiện tại (mây đen) dùng 'is going to'." },
+                    { q: "The teacher made the students __________ the song scale three times.", correctText: "practice", wrongText: ["to practice", "practicing", "practiced"], explain: "Cấu trúc 'make + O + V-bare' (bắt ai làm gì) -> dùng practice." },
+                    { q: "Nam promised __________ his debut single next month.", correctText: "to release", wrongText: ["release", "releasing", "released"], explain: "Sau 'promise' dùng động từ nguyên mẫu có 'to' (to release)." },
+                    { q: "My father usually __________ the groceries for our family on Saturdays.", correctText: "buys", wrongText: ["is buying", "buy", "bought"], explain: "Dấu hiệu 'usually' diễn tả thói quen dùng Hiện tại đơn (buys)." },
+                    { q: "Plastic bottles __________ into landfills every day.", correctText: "are thrown", wrongText: ["throw", "are throwing", "will throw"], explain: "Câu bị động ở thì hiện tại đơn: are + V3 (are thrown)." },
+                    { q: "The audience cheered loudly, __________ the lead singer gave an outstanding performance.", correctText: "for", wrongText: ["but", "or", "nor"], explain: "Liên từ FANBOYS 'for' có nghĩa là 'vì/bởi vì'." }
+                ];
+
+                const selected = this.shuffleArray(rawPool).slice(0, count);
+
+                return selected.map(item => {
+                    // Combine correct and wrong answers into 1 array
+                    const allOptions = [item.correctText, ...item.wrongText];
+                    // Shuffle the 4 options using Fisher-Yates
+                    const shuffledOptions = this.shuffleArray(allOptions);
+                    // Find new index of correct answer
+                    const correctIndex = shuffledOptions.indexOf(item.correctText);
+
+                    return {
+                        q: item.q,
+                        options: shuffledOptions,
+                        correct: correctIndex,
+                        explain: item.explain
+                    };
+                });
+            },
+
+            generateRewrite: function(count = 4) {
+                const pool = [
+                    { prompt: "Nam likes collecting old glass bottles to protect nature.", instruction: "Viết lại câu dùng cấu trúc 'Nam is interested in...'", answer: "Nam is interested in collecting old glass bottles to protect nature." },
+                    { prompt: "Why don't we plant more trees around the school campus?", instruction: "Viết lại câu dùng 'How about...'", answer: "How about planting more trees around the school campus?" },
+                    { prompt: "People drop a huge amount of plastic waste into rivers every year.", instruction: "Chuyển câu sang bị động bắt đầu bằng: 'A huge amount of plastic waste...'", answer: "A huge amount of plastic waste is dropped into rivers every year." },
+                    { prompt: "Lan plans to adopt a greener lifestyle next week.", instruction: "Viết lại câu dùng cấu trúc 'is going to'", answer: "Lan is going to adopt a greener lifestyle next week." },
+                    { prompt: "His parents don't allow him to stay up late to watch concerts.", instruction: "Viết lại câu dùng cấu trúc 'don't let him...'", answer: "His parents don't let him stay up late to watch concerts." },
+                    { prompt: "My father does the heavy lifting every weekend.", instruction: "Viết lại câu bị động bắt đầu bằng: 'The heavy lifting...'", answer: "The heavy lifting is done by my father every weekend." },
+                    { prompt: "She practiced hard. She won first prize in the talent show.", instruction: "Nối 2 câu sử dụng liên từ 'so'", answer: "She practiced hard, so she won first prize in the talent show." }
+                ];
+                return this.shuffleArray(pool).slice(0, count);
+            },
+
+            generateRearrange: function(count = 4) {
+                const pool = [
+                    { full: "Recycling plastic waste reduces landfill pollution.", words: ["Recycling", "plastic", "waste", "reduces", "landfill", "pollution"] },
+                    { full: "She avoids buying single-use plastic bags.", words: ["She", "avoids", "buying", "single-use", "plastic", "bags"] },
+                    { full: "We should reduce our carbon footprint.", words: ["We", "should", "reduce", "our", "carbon", "footprint"] },
+                    { full: "My father is the main breadwinner.", words: ["My", "father", "is", "the", "main", "breadwinner"] },
+                    { full: "She is going to adopt a green lifestyle.", words: ["She", "is", "going", "to", "adopt", "a", "green", "lifestyle"] },
+                    { full: "The audience cheered for the live performance.", words: ["The", "audience", "cheered", "for", "the", "live", "performance"] },
+                    { full: "Banning single-use plastic protects the environment.", words: ["Banning", "single-use", "plastic", "protects", "the", "environment"] },
+                    { full: "He decided to learn to play the piano.", words: ["He", "decided", "to", "learn", "to", "play", "the", "piano"] }
+                ];
+
+                const selected = this.shuffleArray(pool).slice(0, count);
+                return selected.map(item => {
+                    let shuffled = this.shuffleArray(item.words);
+                    // Ensure the word array order is genuinely changed
+                    if (shuffled.join(' ') === item.words.join(' ') && item.words.length > 2) {
+                        shuffled = this.shuffleArray(item.words);
+                    }
+                    return {
+                        shuffled: shuffled,
+                        answer: item.full
+                    };
+                });
+            },
+
+            generateVerbForms: function(count = 4) {
+                const pool = [
+                    { sentence: "My sister suggested (recycle) _______ plastic containers at home.", answer: "recycling" },
+                    { sentence: "They are keen on (participate) _______ in green campaigns.", answer: "participating" },
+                    { sentence: "He hates (criticize) _______ by other judges on stage.", answer: "being criticized" },
+                    { sentence: "Look! Nam (clean) _______ the house for TET holiday.", answer: "is cleaning" },
+                    { sentence: "Plastic bottles (should / recycle) _______ to protect oceans.", answer: "should be recycled" },
+                    { sentence: "Lan agreed (join) _______ the eco-friendly campaign.", answer: "to join" },
+                    { sentence: "Her mother let her (go) _______ to the music festival.", answer: "go" },
+                    { sentence: "I think people (use) _______ more solar energy in 2030.", answer: "will use" },
+                    { sentence: "My brother usually (do) _______ the washing-up after dinner.", answer: "does" }
+                ];
+                return this.shuffleArray(pool).slice(0, count);
+            }
+        };
+
+        // GLOBAL APP STATE
+        let activeMainTab = 'part1'; 
+        let activeUnitTab = 'unit1'; 
+        let activeGeneratedExercises = null;
+
+        // WEB SPEECH API INTEGRATION
+        let synthVoices = [];
+        function loadSynthVoices() {
+            if ('speechSynthesis' in window) {
+                synthVoices = window.speechSynthesis.getVoices();
+            }
+        }
+        if ('speechSynthesis' in window) {
+            loadSynthVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = loadSynthVoices;
+            }
+        }
+
+        function speakWord(text, btnElement) {
+            if (!('speechSynthesis' in window)) {
+                alert("Trình duyệt không hỗ trợ phát âm tự động.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.85;
+            utterance.lang = 'en-US';
+
+            if (synthVoices.length === 0) synthVoices = window.speechSynthesis.getVoices();
+            const enVoice = synthVoices.find(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-GB') || v.lang.includes('en'));
+            if (enVoice) utterance.voice = enVoice;
+
+            let originalHTML = btnElement ? btnElement.innerHTML : '';
+            if (btnElement) {
+                btnElement.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xs"></i>`;
+                btnElement.classList.add('bg-brand-600', 'text-white');
+            }
+
+            utterance.onstart = function() {
+                if (btnElement) btnElement.innerHTML = `<i class="fa-solid fa-waveform text-xs animate-pulse"></i>`;
+            };
+            utterance.onend = utterance.onerror = function() {
+                if (btnElement) {
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.classList.remove('bg-brand-600', 'text-white');
+                }
+            };
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // TAB NAVIGATION LOGIC
+        function switchMainTab(tab) {
+            activeMainTab = tab;
+            document.querySelectorAll('.main-nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`nav-${tab}`).classList.add('active');
+
+            const subtabsBar = document.getElementById('unit-subtabs-bar');
+            if (tab === 'part1') {
+                subtabsBar.style.display = 'flex';
+            } else {
+                subtabsBar.style.display = 'none';
+            }
+            render();
+        }
+
+        function switchUnitTab(unitKey) {
+            activeUnitTab = unitKey;
+            document.querySelectorAll('.unit-subnav-btn').forEach(btn => {
+                btn.className = "unit-subnav-btn px-4 py-2 rounded-lg transition-all text-slate-600 hover:text-brand-600 font-medium";
+            });
+            const activeBtn = document.getElementById(`unit-tab-${unitKey}`);
+            if (activeBtn) {
+                activeBtn.className = "unit-subnav-btn px-4 py-2 rounded-lg transition-all bg-brand-600 text-white font-bold";
+            }
+            render();
+        }
+
+        // MAIN VIEW RENDERER
+        function render() {
+            const container = document.getElementById('content-container');
+            if (activeMainTab === 'part1') {
+                container.innerHTML = renderTheoryView(activeUnitTab);
+            } else {
+                container.innerHTML = renderPracticeView();
+            }
+        }
+
+        // RENDER THEORY VIEW (PART 1)
+        function renderTheoryView(unitKey) {
+            const unit = appData[unitKey];
+            if (!unit) return '';
+
+            const vocabCards = unit.vocab.map(v => `
+                <div class="bg-white border border-slate-200 hover:border-brand-500 rounded-xl p-4 transition-all shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-bold text-base text-brand-700">${v.word}</span>
+                            <button onclick="speakWord('${v.word.replace(/'/g, "\\'")}', this)" title="Nghe phát âm" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-brand-100 text-brand-600 flex items-center justify-center transition-all">
+                                <i class="fa-solid fa-volume-high text-xs"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs font-mono text-slate-400 mb-1">${v.ipa}</p>
+                        <p class="text-xs sm:text-sm font-semibold text-slate-800 mb-2">${v.meaning}</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 text-xs text-slate-500 italic">
+                        "${v.sentence}"
+                    </div>
+                </div>
+            `).join('');
+
+            const grammarCards = unit.grammar.map(g => `
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mb-4">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center">
+                        <span class="w-2.5 h-2.5 bg-brand-600 rounded-full mr-2"></span>
+                        ${g.title}
+                    </h3>
+                    ${g.content}
+                </div>
+            `).join('');
+
+            return `
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center">
+                            <i class="fa-solid fa-spell-check text-brand-600 mr-2"></i>Từ Vựng Trọng Tâm & Phát Âm IPA (${unit.title})
+                        </h3>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            ${vocabCards}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center">
+                            <i class="fa-solid fa-book-bookmark text-emerald-600 mr-2"></i>Tóm Tắt Ngữ Pháp Trọng Tâm
+                        </h3>
+                        ${grammarCards}
+                    </div>
+                </div>
+            `;
+        }
+
+        // RENDER PRACTICE VIEW (PART 2)
+        function renderPracticeView() {
+            if (!activeGeneratedExercises) {
+                generateNewExerciseSet();
+            }
+
+            return `
+                <div class="space-y-6">
+                    <!-- Exercise Action Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white p-4 border border-slate-200 rounded-2xl shadow-sm gap-3">
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900">Bài Tập Tổng Hợp (Unit 1 + Unit 2 + Unit 3)</h2>
+                            <p class="text-xs text-slate-500">Tự động xáo trộn từ vựng và đáp án ngẫu nhiên mỗi lần luyện tập</p>
+                        </div>
+                        <button onclick="generateNewExerciseSet()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow transition-all flex items-center justify-center">
+                            <i class="fa-solid fa-dice mr-2"></i>Sinh Bộ Bài Tập Mới (Randomize)
+                        </button>
+                    </div>
+
+                    <!-- Score Header -->
+                    <div id="score-box" class="hidden bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl p-5 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-lg font-bold">Kết Quả Chấm Điểm</h4>
+                                <p id="score-text" class="text-xs text-emerald-100"></p>
+                            </div>
+                            <div id="score-badge" class="text-2xl font-extrabold bg-white/20 px-4 py-1.5 rounded-xl">0 / 0</div>
+                        </div>
+                    </div>
+
+                    <!-- Form List -->
+                    <div id="exercise-list-container">
+                        ${renderExerciseCardsHTML()}
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateNewExerciseSet() {
+            activeGeneratedExercises = {
+                mcq: QuestionGenerator.generateMCQ(8),
+                rewrite: QuestionGenerator.generateRewrite(4),
+                rearrange: QuestionGenerator.generateRearrange(4),
+                verb: QuestionGenerator.generateVerbForms(4)
+            };
+            render();
+        }
+
+        function renderExerciseCardsHTML() {
+            const ex = activeGeneratedExercises;
+            if (!ex) return '';
+
+            return `
+                <form id="practice-form" onsubmit="event.preventDefault();" class="space-y-6">
+                    <!-- 1. Multiple Choice -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-4 border-b border-slate-100 pb-2">
+                            <i class="fa-solid fa-list-check text-brand-600 mr-2"></i>1. Trắc nghiệm (Multiple Choice)
+                        </h3>
+                        <div class="space-y-4">
+                            ${ex.mcq.map((item, idx) => `
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-2">Câu ${idx + 1}: ${item.q}</p>
+                                    <div class="grid sm:grid-cols-2 gap-2 text-xs">
+                                        ${item.options.map((opt, oIdx) => `
+                                            <label class="flex items-center space-x-2 p-2.5 bg-white border border-slate-200 rounded-lg cursor-pointer hover:border-brand-500">
+                                                <input type="radio" name="mcq-${idx}" value="${oIdx}" class="text-brand-600">
+                                                <span>${String.fromCharCode(65 + oIdx)}. ${opt}</span>
+                                            </label>
+                                        `).join('')}
+                                    </div>
+                                    <div id="mcq-fb-${idx}" class="hidden mt-2 p-2 text-xs rounded-lg font-medium"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 2. Rewrite -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-4 border-b border-slate-100 pb-2">
+                            <i class="fa-solid fa-pen text-brand-600 mr-2"></i>2. Viết lại câu (Rewrite the sentences)
+                        </h3>
+                        <div class="space-y-4">
+                            ${ex.rewrite.map((item, idx) => `
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-1">Câu ${idx + 1}: ${item.prompt}</p>
+                                    <p class="text-xs text-brand-600 font-medium mb-2">➜ ${item.instruction}</p>
+                                    <input type="text" id="rewrite-in-${idx}" placeholder="Nhập câu viết lại hoàn chỉnh..." class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <div id="rewrite-fb-${idx}" class="hidden mt-2 p-2 text-xs rounded-lg font-medium"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 3. Rearrange (Truly Shuffled Words) -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-4 border-b border-slate-100 pb-2">
+                            <i class="fa-solid fa-arrow-down-a-z text-brand-600 mr-2"></i>3. Sắp xếp từ thành câu (Rearrange the words)
+                        </h3>
+                        <div class="space-y-4">
+                            ${ex.rearrange.map((item, idx) => `
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-2">Câu ${idx + 1}: Các từ đã bị xáo trộn:</p>
+                                    <div class="flex flex-wrap gap-1.5 mb-2">
+                                        ${item.shuffled.map(w => `<span class="px-2.5 py-1 bg-white border border-slate-300 rounded-md text-xs font-mono font-semibold text-brand-700 shadow-sm">${w}</span>`).join('')}
+                                    </div>
+                                    <input type="text" id="rearrange-in-${idx}" placeholder="Nhập lại câu hoàn chỉnh..." class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <div id="rearrange-fb-${idx}" class="hidden mt-2 p-2 text-xs rounded-lg font-medium"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- 4. Verb Forms -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="font-bold text-slate-900 text-base mb-4 border-b border-slate-100 pb-2">
+                            <i class="fa-solid fa-italic text-brand-600 mr-2"></i>4. Chia động từ (Verb form / Put the verbs in correct form)
+                        </h3>
+                        <div class="space-y-4">
+                            ${ex.verb.map((item, idx) => `
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-2">Câu ${idx + 1}: ${item.sentence}</p>
+                                    <input type="text" id="verb-in-${idx}" placeholder="Nhập dạng đúng của động từ..." class="w-full sm:w-64 px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <div id="verb-fb-${idx}" class="hidden mt-2 p-2 text-xs rounded-lg font-medium"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap gap-3 justify-end pt-4">
+                        <button type="button" onclick="checkAllAnswers()" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all">
+                            <i class="fa-solid fa-check-double mr-1.5"></i>Kiểm Tra & Chấm Điểm
+                        </button>
+                        <button type="button" onclick="showSolutions()" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs sm:text-sm font-bold rounded-xl transition-all">
+                            <i class="fa-solid fa-eye mr-1.5"></i>Xem Đáp Án Chi Tiết
+                        </button>
+                    </div>
+                </form>
+            `;
+        }
+
+        function cleanString(str) {
+            return str.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.,!?]$/, '');
+        }
+
+        function checkAllAnswers() {
+            const ex = activeGeneratedExercises;
+            if (!ex) return;
+
+            let total = ex.mcq.length + ex.rewrite.length + ex.rearrange.length + ex.verb.length;
+            let score = 0;
+
+            // MCQ
+            ex.mcq.forEach((item, idx) => {
+                const selected = document.querySelector(`input[name="mcq-${idx}"]:checked`);
+                const fb = document.getElementById(`mcq-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+                
+                if (selected && parseInt(selected.value) === item.correct) {
+                    score++;
+                    fb.classList.add('bg-emerald-100', 'text-emerald-800');
+                    fb.innerHTML = `✓ Chính xác! ${item.explain}`;
+                } else {
+                    fb.classList.add('bg-rose-100', 'text-rose-800');
+                    fb.innerHTML = `✗ Chưa đúng! Đáp án đúng: <b>${String.fromCharCode(65 + item.correct)}. ${item.options[item.correct]}</b>. ${item.explain}`;
+                }
+            });
+
+            // Rewrite
+            ex.rewrite.forEach((item, idx) => {
+                const val = document.getElementById(`rewrite-in-${idx}`).value;
+                const fb = document.getElementById(`rewrite-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+
+                if (cleanString(val) === cleanString(item.answer)) {
+                    score++;
+                    fb.classList.add('bg-emerald-100', 'text-emerald-800');
+                    fb.innerHTML = `✓ Chính xác!`;
+                } else {
+                    fb.classList.add('bg-rose-100', 'text-rose-800');
+                    fb.innerHTML = `✗ Chưa đúng. Đáp án tham khảo: <i>"${item.answer}"</i>`;
+                }
+            });
+
+            // Rearrange
+            ex.rearrange.forEach((item, idx) => {
+                const val = document.getElementById(`rearrange-in-${idx}`).value;
+                const fb = document.getElementById(`rearrange-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+
+                if (cleanString(val) === cleanString(item.answer)) {
+                    score++;
+                    fb.classList.add('bg-emerald-100', 'text-emerald-800');
+                    fb.innerHTML = `✓ Chính xác!`;
+                } else {
+                    fb.classList.add('bg-rose-100', 'text-rose-800');
+                    fb.innerHTML = `✗ Chưa đúng. Câu đúng là: <i>"${item.answer}"</i>`;
+                }
+            });
+
+            // Verb
+            ex.verb.forEach((item, idx) => {
+                const val = document.getElementById(`verb-in-${idx}`).value;
+                const fb = document.getElementById(`verb-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+
+                if (cleanString(val) === cleanString(item.answer)) {
+                    score++;
+                    fb.classList.add('bg-emerald-100', 'text-emerald-800');
+                    fb.innerHTML = `✓ Chính xác!`;
+                } else {
+                    fb.classList.add('bg-rose-100', 'text-rose-800');
+                    fb.innerHTML = `✗ Chưa đúng. Đáp án đúng: <b>${item.answer}</b>`;
+                }
+            });
+
+            const scoreBox = document.getElementById('score-box');
+            const scoreText = document.getElementById('score-text');
+            const scoreBadge = document.getElementById('score-badge');
+
+            const percent = Math.round((score / total) * 100);
+            scoreBadge.innerText = `${score} / ${total} (${percent}%)`;
+            scoreText.innerText = percent >= 80 ? "Xuất sắc! Bạn làm chủ kiến thức rất tốt." : "Hãy nhấn 'Sinh Bộ Bài Tập Mới' để tiếp tục rèn luyện!";
+            scoreBox.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showSolutions() {
+            const ex = activeGeneratedExercises;
+            if (!ex) return;
+
+            ex.mcq.forEach((item, idx) => {
+                const fb = document.getElementById(`mcq-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-rose-100', 'text-rose-800');
+                fb.classList.add('bg-sky-100', 'text-sky-900');
+                fb.innerHTML = `Đáp án: <b>${String.fromCharCode(65 + item.correct)}. ${item.options[item.correct]}</b> (${item.explain})`;
+            });
+
+            ex.rewrite.forEach((item, idx) => {
+                const fb = document.getElementById(`rewrite-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-rose-100', 'text-rose-800');
+                fb.classList.add('bg-sky-100', 'text-sky-900');
+                fb.innerHTML = `Đáp án: <b>${item.answer}</b>`;
+            });
+
+            ex.rearrange.forEach((item, idx) => {
+                const fb = document.getElementById(`rearrange-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-rose-100', 'text-rose-800');
+                fb.classList.add('bg-sky-100', 'text-sky-900');
+                fb.innerHTML = `Đáp án: <b>${item.answer}</b>`;
+            });
+
+            ex.verb.forEach((item, idx) => {
+                const fb = document.getElementById(`verb-fb-${idx}`);
+                fb.classList.remove('hidden', 'bg-rose-100', 'text-rose-800');
+                fb.classList.add('bg-sky-100', 'text-sky-900');
+                fb.innerHTML = `Đáp án: <b>${item.answer}</b>`;
+            });
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            switchMainTab('part1');
+        };
+    </script>
+</body>
+</html>
